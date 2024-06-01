@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:weather_app/router/routes.dart';
 import 'package:weather_app/utils/utils.dart';
 
 class WeatherCard extends StatelessWidget {
@@ -18,7 +20,7 @@ class WeatherCard extends StatelessWidget {
       splashColor: Colors.grey.withAlpha(30),
       borderRadius: const BorderRadius.all(Radius.circular(12)),
       onTap: () {
-        debugPrint('Card tapped.');
+        context.push(kWeatherDetailsRoute);
       },
       child: Ink(
         height: 96,

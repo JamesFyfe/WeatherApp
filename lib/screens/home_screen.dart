@@ -3,12 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/constants/constants.dart';
 import 'package:weather_app/providers/api_providers.dart';
 import 'package:weather_app/providers/app_providers.dart';
+import 'package:weather_app/providers/location_provider.dart';
 import 'package:weather_app/widgets/ui_widgets.dart';
 
-import '../providers/location_provider.dart';
-
-class WeatherView extends ConsumerWidget {
-  const WeatherView({super.key});
+class HomeScreen extends ConsumerWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weather_app/router/go_router.dart';
 import 'package:weather_app/providers/app_providers.dart';
-import 'package:weather_app/views/weather_view.dart';
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
@@ -10,11 +10,11 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedTheme = ref.watch(selectedThemeProvider);
 
-    return MaterialApp(
+    return MaterialApp.router(
       title: "Flutter Weather App",
       debugShowCheckedModeBanner: false,
-      home: const WeatherView(),
       theme: selectedTheme,
+      routerConfig: router,
     );
   }
 }
