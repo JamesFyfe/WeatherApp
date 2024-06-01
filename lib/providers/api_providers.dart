@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:weather_app/constants/constants.dart';
 
 part 'api_providers.g.dart';
 
@@ -9,7 +9,7 @@ class WeatherData extends _$WeatherData {
   @override
   FutureOr<Map<String, dynamic>> build(
       double latitude, double longitude) async {
-    const apiKey = kOpenWeatherMapApiKey;
+    final apiKey = dotenv.env['OPEN_WEATHER_MAP_API_KEY'];
     final dio = Dio();
 
     try {
