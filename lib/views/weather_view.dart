@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/constants/constants.dart';
 import 'package:weather_app/providers/api_providers.dart';
+import 'package:weather_app/providers/app_providers.dart';
 import 'package:weather_app/widgets/ui_widgets.dart';
 
 import '../providers/location_provider.dart';
@@ -54,6 +55,12 @@ class WeatherView extends ConsumerWidget {
                 ),
                 error: (error, stackTrace) =>
                     Text('Error getting location data: $error'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  ref.read(selectedThemeProvider.notifier).toggleTheme();
+                },
+                child: const Icon(Icons.brightness_6),
               ),
             ],
           ),
