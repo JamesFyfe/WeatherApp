@@ -39,11 +39,25 @@ class WeatherView extends ConsumerWidget {
                     ],
                   );
                 },
-                loading: () => const CircularProgressIndicator(),
+                loading: () => const Center(
+                  child: Column(
+                    children: [
+                      Text("Waiting for weather data..."),
+                      CircularProgressIndicator(),
+                    ],
+                  ),
+                ),
                 error: (error, stackTrace) => Text('Error: $error'),
               );
             },
-            loading: () => const CircularProgressIndicator(),
+            loading: () => const Center(
+              child: Column(
+                children: [
+                  Text("Waiting for location data..."),
+                  CircularProgressIndicator(),
+                ],
+              ),
+            ),
             error: (error, stackTrace) => Text('Error: $error'),
           ),
         ),
