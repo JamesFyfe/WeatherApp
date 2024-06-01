@@ -8,13 +8,13 @@ part 'api_providers.g.dart';
 class WeatherData extends _$WeatherData {
   @override
   FutureOr<Map<String, dynamic>> build(
-      double latitude, double longitude) async {
+      double latitude, double longitude, String apiUrl) async {
     final apiKey = dotenv.env['OPEN_WEATHER_MAP_API_KEY'];
     final dio = Dio();
 
     try {
       final response = await dio.get(
-        'https://api.openweathermap.org/data/2.5/forecast',
+        apiUrl,
         queryParameters: {
           'lat': latitude,
           'lon': longitude,

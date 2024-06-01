@@ -6,7 +6,7 @@ part of 'api_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$weatherDataHash() => r'1c5db3e95035dadb48e54875fa4f1b1eac5f7240';
+String _$weatherDataHash() => r'7a267ffaecbcf6d7cce89ade45e60d289a328e99';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -33,10 +33,12 @@ abstract class _$WeatherData
     extends BuildlessAutoDisposeAsyncNotifier<Map<String, dynamic>> {
   late final double latitude;
   late final double longitude;
+  late final String apiUrl;
 
   FutureOr<Map<String, dynamic>> build(
     double latitude,
     double longitude,
+    String apiUrl,
   );
 }
 
@@ -53,10 +55,12 @@ class WeatherDataFamily extends Family<AsyncValue<Map<String, dynamic>>> {
   WeatherDataProvider call(
     double latitude,
     double longitude,
+    String apiUrl,
   ) {
     return WeatherDataProvider(
       latitude,
       longitude,
+      apiUrl,
     );
   }
 
@@ -67,6 +71,7 @@ class WeatherDataFamily extends Family<AsyncValue<Map<String, dynamic>>> {
     return call(
       provider.latitude,
       provider.longitude,
+      provider.apiUrl,
     );
   }
 
@@ -92,10 +97,12 @@ class WeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
   WeatherDataProvider(
     double latitude,
     double longitude,
+    String apiUrl,
   ) : this._internal(
           () => WeatherData()
             ..latitude = latitude
-            ..longitude = longitude,
+            ..longitude = longitude
+            ..apiUrl = apiUrl,
           from: weatherDataProvider,
           name: r'weatherDataProvider',
           debugGetCreateSourceHash:
@@ -107,6 +114,7 @@ class WeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
               WeatherDataFamily._allTransitiveDependencies,
           latitude: latitude,
           longitude: longitude,
+          apiUrl: apiUrl,
         );
 
   WeatherDataProvider._internal(
@@ -118,10 +126,12 @@ class WeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
     required super.from,
     required this.latitude,
     required this.longitude,
+    required this.apiUrl,
   }) : super.internal();
 
   final double latitude;
   final double longitude;
+  final String apiUrl;
 
   @override
   FutureOr<Map<String, dynamic>> runNotifierBuild(
@@ -130,6 +140,7 @@ class WeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
     return notifier.build(
       latitude,
       longitude,
+      apiUrl,
     );
   }
 
@@ -140,7 +151,8 @@ class WeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
       override: WeatherDataProvider._internal(
         () => create()
           ..latitude = latitude
-          ..longitude = longitude,
+          ..longitude = longitude
+          ..apiUrl = apiUrl,
         from: from,
         name: null,
         dependencies: null,
@@ -148,6 +160,7 @@ class WeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
         debugGetCreateSourceHash: null,
         latitude: latitude,
         longitude: longitude,
+        apiUrl: apiUrl,
       ),
     );
   }
@@ -162,7 +175,8 @@ class WeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
   bool operator ==(Object other) {
     return other is WeatherDataProvider &&
         other.latitude == latitude &&
-        other.longitude == longitude;
+        other.longitude == longitude &&
+        other.apiUrl == apiUrl;
   }
 
   @override
@@ -170,6 +184,7 @@ class WeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, latitude.hashCode);
     hash = _SystemHash.combine(hash, longitude.hashCode);
+    hash = _SystemHash.combine(hash, apiUrl.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -182,6 +197,9 @@ mixin WeatherDataRef
 
   /// The parameter `longitude` of this provider.
   double get longitude;
+
+  /// The parameter `apiUrl` of this provider.
+  String get apiUrl;
 }
 
 class _WeatherDataProviderElement
@@ -193,6 +211,8 @@ class _WeatherDataProviderElement
   double get latitude => (origin as WeatherDataProvider).latitude;
   @override
   double get longitude => (origin as WeatherDataProvider).longitude;
+  @override
+  String get apiUrl => (origin as WeatherDataProvider).apiUrl;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

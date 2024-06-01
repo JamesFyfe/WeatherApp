@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weather_app/constants/constants.dart';
 import 'package:weather_app/providers/api_providers.dart';
-import 'package:weather_app/utils/utils.dart';
+import 'package:weather_app/widgets/ui_widgets.dart';
 
 import '../providers/location_provider.dart';
 
@@ -15,50 +16,46 @@ class WeatherView extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('James\' Weather')),
       body: SafeArea(
-        child: Center(
-          child: currentCoordinates.when(
-            data: (position) {
-              final lat = position.latitude;
-              final lon = position.longitude;
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              currentCoordinates.when(
+                data: (coords) {
+                  final currentLat = coords.latitude;
+                  final currentLon = coords.longitude;
 
-              final weatherDataAsync = ref.watch(weatherDataProvider(lat, lon));
+                  final currentWeatherDataAsync = ref.watch(weatherDataProvider(
+                      currentLat, currentLon, kCurrentWeatherApiUrl));
 
-              return weatherDataAsync.when(
-                data: (weatherData) {
-                  final cityName = weatherData['city']['name'];
-                  final temperature = kelvinToFahrenheit(
-                      weatherData['list'][0]['main']['temp']);
-                  // Extract other relevant weather information
-
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('City: $cityName'),
-                      Text('Temperature: $temperature'),
-                      // Display other weather information
-                    ],
+                  return currentWeatherDataAsync.when(
+                    data: (currentWeatherData) {
+                      return WeatherCard(currentWeatherData);
+                    },
+                    loading: () => const Center(
+                      child: Column(
+                        children: [
+                          Text('Waiting for weather data...'),
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    ),
+                    error: (error, stackTrace) =>
+                        Text('Error getting weather data: $error'),
                   );
                 },
                 loading: () => const Center(
                   child: Column(
                     children: [
-                      Text("Waiting for weather data..."),
+                      Text('Waiting for location data...'),
                       CircularProgressIndicator(),
                     ],
                   ),
                 ),
-                error: (error, stackTrace) => Text('Error: $error'),
-              );
-            },
-            loading: () => const Center(
-              child: Column(
-                children: [
-                  Text("Waiting for location data..."),
-                  CircularProgressIndicator(),
-                ],
+                error: (error, stackTrace) =>
+                    Text('Error getting location data: $error'),
               ),
-            ),
-            error: (error, stackTrace) => Text('Error: $error'),
+            ],
           ),
         ),
       ),
