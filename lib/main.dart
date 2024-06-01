@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weather_app/themes.dart';
 import 'package:weather_app/views/weather_view.dart';
 
 Future<void> main() async {
@@ -18,9 +19,11 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const MaterialApp(
+    return MaterialApp(
+      title: "Flutter Weather App",
       debugShowCheckedModeBanner: false,
-      home: WeatherView(),
+      home: const WeatherView(),
+      theme: Themes.lightTheme,
     );
   }
 }
