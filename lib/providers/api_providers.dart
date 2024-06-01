@@ -1,13 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'constants.dart';
+import 'package:weather_app/constants/constants.dart';
 
 part 'api_providers.g.dart';
-
-@riverpod
-String helloWorld(HelloWorldRef ref) {
-  return 'Hello world';
-}
 
 @riverpod
 class WeatherData extends _$WeatherData {
