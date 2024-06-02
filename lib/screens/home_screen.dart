@@ -19,24 +19,25 @@ class HomeScreen extends ConsumerWidget {
           child: Column(
             children: [
               const SearchBarAndResults(),
-
-              // Current location weatherCard
-              Consumer(
-                builder: (context, ref, child) {
-                  final currentCoordinates = ref.watch(locationProvider);
-                  return currentCoordinates != null
-                      ? WeatherCard(currentCoordinates)
-                      : const EmptyWeatherCard(
-                          'Loading current coords... Last known location is null');
-                },
-              ),
-              // Saved location weatherCards
               Expanded(
                 child: ListView(
-                  children: SharedPrefs()
-                      .savedLocations
-                      .map((location) => WeatherCard(location))
-                      .toList(),
+                  children: [
+                    // Current location weatherCard
+                    Consumer(
+                      builder: (context, ref, child) {
+                        final currentCoordinates = ref.watch(locationProvider);
+                        return currentCoordinates != null
+                            ? WeatherCard(currentCoordinates)
+                            : const EmptyWeatherCard(
+                                'Loading current coords... Last known location is null');
+                      },
+                    ),
+                    // Saved location weatherCards
+                    ...SharedPrefs()
+                        .savedLocations
+                        .map((location) => WeatherCard(location))
+                        .toList(),
+                  ],
                 ),
               ),
               ElevatedButton(
