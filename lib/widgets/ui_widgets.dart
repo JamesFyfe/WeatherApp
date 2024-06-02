@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:weather_app/classes/coordinates.dart';
+import 'package:weather_app/providers/app_providers.dart';
 import 'package:weather_app/providers/weather_api_providers.dart';
 import 'package:weather_app/router/routes.dart';
 import 'package:weather_app/utils/utils.dart';
@@ -77,15 +78,32 @@ class WeatherCard extends ConsumerWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      '${temperature.toString()}°',
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayLarge
-                          ?.copyWith(color: Colors.white),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 0, 16),
+                        child: Text(
+                          '${temperature.toString()}°',
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge
+                              ?.copyWith(color: Colors.white),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                          icon: const Icon(Icons.close, color: Colors.white),
+                          onPressed: () {
+                            ref
+                                .read(savedLocationsProvider.notifier)
+                                .removeLocation(coordinates);
+                          },
+                        ),
+                      )
+                    ],
                   )
                 ],
               ),
