@@ -38,5 +38,20 @@ final savedLocationsProvider =
 );
 
 typedef _$SavedLocations = AutoDisposeNotifier<List<Coordinates>>;
+String _$selectedUnitHash() => r'76772f4440c08e5bfeee6a7f72ee98f21cb28e6a';
+
+/// See also [SelectedUnit].
+@ProviderFor(SelectedUnit)
+final selectedUnitProvider =
+    AutoDisposeNotifierProvider<SelectedUnit, String>.internal(
+  SelectedUnit.new,
+  name: r'selectedUnitProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$selectedUnitHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SelectedUnit = AutoDisposeNotifier<String>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

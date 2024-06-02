@@ -36,3 +36,21 @@ class SavedLocations extends _$SavedLocations {
     state = SharedPrefs().savedLocations;
   }
 }
+
+@riverpod
+class SelectedUnit extends _$SelectedUnit {
+  @override
+  String build() {
+    return SharedPrefs().unit;
+  }
+
+  void setFarenheit() {
+    SharedPrefs().unit = 'F';
+    state = 'F';
+  }
+
+  void setCelsius() {
+    SharedPrefs().unit = 'C';
+    state = 'C';
+  }
+}

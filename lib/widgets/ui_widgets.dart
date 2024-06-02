@@ -8,8 +8,9 @@ import 'package:weather_app/router/routes.dart';
 import 'package:weather_app/utils/utils.dart';
 
 class WeatherCard extends ConsumerWidget {
-  const WeatherCard(this.coordinates, {super.key});
+  const WeatherCard(this.coordinates, {this.closable = true, super.key});
   final Coordinates coordinates;
+  final bool closable;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,11 +18,14 @@ class WeatherCard extends ConsumerWidget {
       coordinates.latitude,
       coordinates.longitude,
     ));
+    final tempUnit = ref.watch(selectedUnitProvider);
 
     return weatherDataAsync.when(
       data: (weatherData) {
         final cityName = weatherData['name'];
-        final temperature = kelvinToFahrenheit(weatherData['main']['temp']);
+        final temperature = tempUnit == 'F'
+            ? kelvinToFahrenheit(weatherData['main']['temp'])
+            : kelvinToCelsius(weatherData['main']['temp']);
         final weather = weatherData['weather'][0]['main'];
         final weatherDescription = weatherData['weather'][0]['description'];
         final weatherIconId = weatherData['weather'][0]['icon'];
@@ -29,7 +33,7 @@ class WeatherCard extends ConsumerWidget {
             'https://openweathermap.org/img/wn/$weatherIconId@2x.png';
 
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 4),
           child: InkWell(
             splashColor: Colors.grey.withAlpha(30),
             borderRadius: const BorderRadius.all(Radius.circular(12)),
@@ -83,7 +87,7 @@ class WeatherCard extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 0, 16),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         child: Text(
                           '${temperature.toString()}°',
                           style: Theme.of(context)
@@ -94,14 +98,20 @@ class WeatherCard extends ConsumerWidget {
                       ),
                       Align(
                         alignment: Alignment.topRight,
-                        child: IconButton(
-                          icon: const Icon(Icons.close, color: Colors.white),
-                          onPressed: () {
-                            ref
-                                .read(savedLocationsProvider.notifier)
-                                .removeLocation(coordinates);
-                          },
-                        ),
+                        child: closable
+                            ? SizedBox(
+                                width: 48,
+                                child: IconButton(
+                                  icon: const Icon(Icons.close,
+                                      color: Colors.white),
+                                  onPressed: () {
+                                    ref
+                                        .read(savedLocationsProvider.notifier)
+                                        .removeLocation(coordinates);
+                                  },
+                                ),
+                              )
+                            : const SizedBox(width: 48),
                       )
                     ],
                   )
@@ -126,7 +136,6 @@ class EmptyWeatherCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print("EMPTY WEATHER CARD");
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: InkWell(

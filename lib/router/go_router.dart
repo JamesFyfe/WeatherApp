@@ -17,5 +17,11 @@ final GoRouter router = GoRouter(
         return const WeatherDetailsScreen();
       },
     ),
+    GoRoute(
+      path: kSettingsRoute,
+      builder: (BuildContext context, GoRouterState state) {
+        return const SettingsScreen();
+      },
+    ),
   ],
 );

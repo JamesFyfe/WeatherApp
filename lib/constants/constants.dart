@@ -5,4 +5,4 @@ const kGeocodingApiUrl = 'http://api.openweathermap.org/geo/1.0/direct';
 const kLastKnownLocation = 'lastKnownLocation';
 const kSavedLocations = 'savedLocations';
 const kDarkMode = 'darkMode';
-const kCelsius = 'celsius';
+const kUnit = 'unit';

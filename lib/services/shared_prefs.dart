@@ -37,18 +37,18 @@ class SharedPrefs {
   }
 
   bool get darkMode => _getData(kDarkMode) ?? false;
-
   set darkMode(bool value) => _saveData(kDarkMode, value);
+
+  String get unit => _getData(kUnit) ?? 'F';
+  set unit(String value) => _saveData(kUnit, value);
 
   Coordinates? get lastKnownLocation =>
       Coordinates.decode(_getData(kLastKnownLocation) ?? '').firstOrNull;
-
   set lastKnownLocation(Coordinates? coords) => _saveData(
       kLastKnownLocation, coords == null ? null : Coordinates.encode([coords]));
 
   List<Coordinates> get savedLocations =>
       Coordinates.decode(_getData(kSavedLocations) ?? '');
-
   set savedLocations(List<Coordinates> locations) =>
       _saveData(kSavedLocations, Coordinates.encode(locations));
 
