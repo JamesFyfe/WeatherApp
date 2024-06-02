@@ -22,5 +22,21 @@ final selectedThemeProvider =
 );
 
 typedef _$SelectedTheme = AutoDisposeNotifier<ThemeData>;
+String _$savedLocationsHash() => r'4c10d29abc2d62314c1cb7cbbb6f533677af8ab7';
+
+/// See also [SavedLocations].
+@ProviderFor(SavedLocations)
+final savedLocationsProvider =
+    AutoDisposeNotifierProvider<SavedLocations, List<Coordinates>>.internal(
+  SavedLocations.new,
+  name: r'savedLocationsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$savedLocationsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SavedLocations = AutoDisposeNotifier<List<Coordinates>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/classes/coordinates.dart';
+import 'package:weather_app/providers/app_providers.dart';
 import 'package:weather_app/providers/weather_api_providers.dart';
 import 'package:weather_app/services/shared_prefs.dart';
 
@@ -74,7 +75,9 @@ class CitySearchResults extends ConsumerWidget {
                           onTap: () {
                             Coordinates coords = Coordinates(
                                 latitude: city['lat'], longitude: city['lon']);
-                            SharedPrefs().addSavedLocation(coords);
+                            ref
+                                .read(savedLocationsProvider.notifier)
+                                .addLocation(coords);
                             ref.read(searchQueryProvider.notifier).setQuery('');
                           },
                         ),

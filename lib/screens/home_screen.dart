@@ -42,10 +42,18 @@ class HomeScreen extends ConsumerWidget {
                                 },
                               ),
                               // Saved location weatherCards
-                              ...SharedPrefs()
-                                  .savedLocations
-                                  .map((location) => WeatherCard(location))
-                                  .toList(),
+                              Consumer(
+                                builder: (context, ref, child) {
+                                  final savedLocations =
+                                      ref.watch(savedLocationsProvider);
+                                  return Column(
+                                    children: savedLocations
+                                        .map(
+                                            (location) => WeatherCard(location))
+                                        .toList(),
+                                  );
+                                },
+                              ),
                             ],
                           ),
                         ),
