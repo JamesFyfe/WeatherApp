@@ -38,7 +38,10 @@ class WeatherCard extends StatelessWidget {
                 children: [
                   Text(
                     cityName,
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(color: Colors.white),
                   ),
                   Row(
                     children: [
@@ -49,7 +52,11 @@ class WeatherCard extends StatelessWidget {
                         fit: BoxFit.contain,
                       ),
                       const SizedBox(width: 8),
-                      Text(capitalizeFirstLetter(weatherDescription)),
+                      Text(capitalizeFirstLetter(weatherDescription),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Colors.white)),
                     ],
                   ),
                 ],
@@ -58,8 +65,11 @@ class WeatherCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                temperature.toString(),
-                style: Theme.of(context).textTheme.displayLarge,
+                "${temperature.toString()}°",
+                style: Theme.of(context)
+                    .textTheme
+                    .displayLarge
+                    ?.copyWith(color: Colors.white),
               ),
             )
           ],
