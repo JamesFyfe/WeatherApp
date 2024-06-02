@@ -6,23 +6,7 @@ part of 'app_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sharedPreferencesHash() => r'5bd64b2e955a2adbe9af0a4cd3edab6923105998';
-
-/// See also [sharedPreferences].
-@ProviderFor(sharedPreferences)
-final sharedPreferencesProvider =
-    AutoDisposeProvider<SharedPreferences>.internal(
-  sharedPreferences,
-  name: r'sharedPreferencesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$sharedPreferencesHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef SharedPreferencesRef = AutoDisposeProviderRef<SharedPreferences>;
-String _$selectedThemeHash() => r'c84ae1ab7d8081ac3f6332e2d7a4b5ca3f85fd1c';
+String _$selectedThemeHash() => r'23b17bb580a4aa38f47677680558b0b4703b644a';
 
 /// See also [SelectedTheme].
 @ProviderFor(SelectedTheme)

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/classes/coordinates.dart';
 import 'package:weather_app/providers/app_providers.dart';
 import 'package:weather_app/providers/location_provider.dart';
+import 'package:weather_app/services/shared_prefs.dart';
 import 'package:weather_app/widgets/ui_widgets.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -11,16 +12,6 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentCoordinates = ref.watch(locationProvider);
-
-    final prefs = ref.watch(sharedPreferencesProvider);
-
-    String lastKnownLocationString = prefs.getString('lastKnownLocation') ?? '';
-    Coordinates? lastKnownLocation =
-        Coordinates.decode(lastKnownLocationString).firstOrNull;
-
-    String savedCoordinatesString = prefs.getString('savedLocations') ?? '';
-    List<Coordinates> savedLocationsList =
-        Coordinates.decode(savedCoordinatesString);
 
     return Scaffold(
       appBar: AppBar(title: const Text('James\' Weather')),
@@ -31,13 +22,12 @@ class HomeScreen extends ConsumerWidget {
             children: [
               currentCoordinates.when(
                 data: (coords) {
-                  prefs.setString(
-                      'lastKnownLocation', Coordinates.encode([coords]));
+                  SharedPrefs().lastKnownLocation = coords;
                   return WeatherCard(coords);
                 },
                 loading: () {
-                  return lastKnownLocation != null
-                      ? WeatherCard(lastKnownLocation)
+                  return SharedPrefs().lastKnownLocation != null
+                      ? WeatherCard(SharedPrefs().lastKnownLocation!)
                       : const EmptyWeatherCard(
                           'Loading current coords... Last known location is null');
                 },
@@ -48,7 +38,8 @@ class HomeScreen extends ConsumerWidget {
               ),
               Expanded(
                 child: ListView(
-                  children: savedLocationsList
+                  children: SharedPrefs()
+                      .savedLocations
                       .map((location) => WeatherCard(location))
                       .toList(),
                 ),

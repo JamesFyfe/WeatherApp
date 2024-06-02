@@ -31,6 +31,18 @@ class Coordinates {
   }
 
   @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other.runtimeType != runtimeType) return false;
+    return other is Coordinates &&
+        other.latitude == latitude &&
+        other.longitude == longitude;
+  }
+
+  @override
+  int get hashCode => Object.hash(latitude, longitude);
+
+  @override
   String toString() {
     return 'Coordinates{latitude: $latitude, longitude: $longitude}';
   }

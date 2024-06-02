@@ -36,7 +36,7 @@ class Location extends _$Location {
         'Location permissions are permanently denied, we cannot request permissions.',
       );
     }
-
+    // state = await Geolocator.getCurrentPosition();
     return await Geolocator.getCurrentPosition();
   }
 }
