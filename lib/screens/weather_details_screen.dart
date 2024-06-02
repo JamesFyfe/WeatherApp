@@ -9,11 +9,11 @@ class WeatherDetailsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('Weather details')),
-      body: SafeArea(
+      body: const SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16),
           child: Column(
-            children: [const Text("Details")],
+            children: [Text("Details")],
           ),
         ),
       ),

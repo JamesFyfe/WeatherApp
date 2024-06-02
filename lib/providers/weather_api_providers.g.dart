@@ -1,12 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'api_providers.dart';
+part of 'weather_api_providers.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$weatherDataHash() => r'7a267ffaecbcf6d7cce89ade45e60d289a328e99';
+String _$currentWeatherDataHash() =>
+    r'cd0e146d9af710c3dd842b6b782d0f2fdbb271e7';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,49 +30,45 @@ class _SystemHash {
   }
 }
 
-abstract class _$WeatherData
+abstract class _$CurrentWeatherData
     extends BuildlessAutoDisposeAsyncNotifier<Map<String, dynamic>> {
   late final double latitude;
   late final double longitude;
-  late final String apiUrl;
 
   FutureOr<Map<String, dynamic>> build(
     double latitude,
     double longitude,
-    String apiUrl,
   );
 }
 
-/// See also [WeatherData].
-@ProviderFor(WeatherData)
-const weatherDataProvider = WeatherDataFamily();
+/// See also [CurrentWeatherData].
+@ProviderFor(CurrentWeatherData)
+const currentWeatherDataProvider = CurrentWeatherDataFamily();
 
-/// See also [WeatherData].
-class WeatherDataFamily extends Family<AsyncValue<Map<String, dynamic>>> {
-  /// See also [WeatherData].
-  const WeatherDataFamily();
+/// See also [CurrentWeatherData].
+class CurrentWeatherDataFamily
+    extends Family<AsyncValue<Map<String, dynamic>>> {
+  /// See also [CurrentWeatherData].
+  const CurrentWeatherDataFamily();
 
-  /// See also [WeatherData].
-  WeatherDataProvider call(
+  /// See also [CurrentWeatherData].
+  CurrentWeatherDataProvider call(
     double latitude,
     double longitude,
-    String apiUrl,
   ) {
-    return WeatherDataProvider(
+    return CurrentWeatherDataProvider(
       latitude,
       longitude,
-      apiUrl,
     );
   }
 
   @override
-  WeatherDataProvider getProviderOverride(
-    covariant WeatherDataProvider provider,
+  CurrentWeatherDataProvider getProviderOverride(
+    covariant CurrentWeatherDataProvider provider,
   ) {
     return call(
       provider.latitude,
       provider.longitude,
-      provider.apiUrl,
     );
   }
 
@@ -87,37 +84,34 @@ class WeatherDataFamily extends Family<AsyncValue<Map<String, dynamic>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'weatherDataProvider';
+  String? get name => r'currentWeatherDataProvider';
 }
 
-/// See also [WeatherData].
-class WeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    WeatherData, Map<String, dynamic>> {
-  /// See also [WeatherData].
-  WeatherDataProvider(
+/// See also [CurrentWeatherData].
+class CurrentWeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
+    CurrentWeatherData, Map<String, dynamic>> {
+  /// See also [CurrentWeatherData].
+  CurrentWeatherDataProvider(
     double latitude,
     double longitude,
-    String apiUrl,
   ) : this._internal(
-          () => WeatherData()
+          () => CurrentWeatherData()
             ..latitude = latitude
-            ..longitude = longitude
-            ..apiUrl = apiUrl,
-          from: weatherDataProvider,
-          name: r'weatherDataProvider',
+            ..longitude = longitude,
+          from: currentWeatherDataProvider,
+          name: r'currentWeatherDataProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$weatherDataHash,
-          dependencies: WeatherDataFamily._dependencies,
+                  : _$currentWeatherDataHash,
+          dependencies: CurrentWeatherDataFamily._dependencies,
           allTransitiveDependencies:
-              WeatherDataFamily._allTransitiveDependencies,
+              CurrentWeatherDataFamily._allTransitiveDependencies,
           latitude: latitude,
           longitude: longitude,
-          apiUrl: apiUrl,
         );
 
-  WeatherDataProvider._internal(
+  CurrentWeatherDataProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -126,33 +120,29 @@ class WeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
     required super.from,
     required this.latitude,
     required this.longitude,
-    required this.apiUrl,
   }) : super.internal();
 
   final double latitude;
   final double longitude;
-  final String apiUrl;
 
   @override
   FutureOr<Map<String, dynamic>> runNotifierBuild(
-    covariant WeatherData notifier,
+    covariant CurrentWeatherData notifier,
   ) {
     return notifier.build(
       latitude,
       longitude,
-      apiUrl,
     );
   }
 
   @override
-  Override overrideWith(WeatherData Function() create) {
+  Override overrideWith(CurrentWeatherData Function() create) {
     return ProviderOverride(
       origin: this,
-      override: WeatherDataProvider._internal(
+      override: CurrentWeatherDataProvider._internal(
         () => create()
           ..latitude = latitude
-          ..longitude = longitude
-          ..apiUrl = apiUrl,
+          ..longitude = longitude,
         from: from,
         name: null,
         dependencies: null,
@@ -160,23 +150,21 @@ class WeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
         debugGetCreateSourceHash: null,
         latitude: latitude,
         longitude: longitude,
-        apiUrl: apiUrl,
       ),
     );
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<WeatherData, Map<String, dynamic>>
-      createElement() {
-    return _WeatherDataProviderElement(this);
+  AutoDisposeAsyncNotifierProviderElement<CurrentWeatherData,
+      Map<String, dynamic>> createElement() {
+    return _CurrentWeatherDataProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is WeatherDataProvider &&
+    return other is CurrentWeatherDataProvider &&
         other.latitude == latitude &&
-        other.longitude == longitude &&
-        other.apiUrl == apiUrl;
+        other.longitude == longitude;
   }
 
   @override
@@ -184,35 +172,29 @@ class WeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, latitude.hashCode);
     hash = _SystemHash.combine(hash, longitude.hashCode);
-    hash = _SystemHash.combine(hash, apiUrl.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin WeatherDataRef
+mixin CurrentWeatherDataRef
     on AutoDisposeAsyncNotifierProviderRef<Map<String, dynamic>> {
   /// The parameter `latitude` of this provider.
   double get latitude;
 
   /// The parameter `longitude` of this provider.
   double get longitude;
-
-  /// The parameter `apiUrl` of this provider.
-  String get apiUrl;
 }
 
-class _WeatherDataProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<WeatherData,
-        Map<String, dynamic>> with WeatherDataRef {
-  _WeatherDataProviderElement(super.provider);
+class _CurrentWeatherDataProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<CurrentWeatherData,
+        Map<String, dynamic>> with CurrentWeatherDataRef {
+  _CurrentWeatherDataProviderElement(super.provider);
 
   @override
-  double get latitude => (origin as WeatherDataProvider).latitude;
+  double get latitude => (origin as CurrentWeatherDataProvider).latitude;
   @override
-  double get longitude => (origin as WeatherDataProvider).longitude;
-  @override
-  String get apiUrl => (origin as WeatherDataProvider).apiUrl;
+  double get longitude => (origin as CurrentWeatherDataProvider).longitude;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

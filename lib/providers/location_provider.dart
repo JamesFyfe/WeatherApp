@@ -1,13 +1,16 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:weather_app/classes/coordinates.dart';
 
 part 'location_provider.g.dart';
 
 @riverpod
 class Location extends _$Location {
   @override
-  FutureOr<Position> build() async {
-    return await _determinePosition();
+  FutureOr<Coordinates> build() async {
+    Position position = await _determinePosition();
+    return Coordinates(
+        latitude: position.latitude, longitude: position.longitude);
   }
 
   Future<Position> _determinePosition() async {

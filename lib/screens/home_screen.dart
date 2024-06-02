@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:weather_app/constants/constants.dart';
-import 'package:weather_app/providers/api_providers.dart';
+import 'package:weather_app/classes/coordinates.dart';
 import 'package:weather_app/providers/app_providers.dart';
 import 'package:weather_app/providers/location_provider.dart';
 import 'package:weather_app/widgets/ui_widgets.dart';
@@ -13,47 +12,46 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentCoordinates = ref.watch(locationProvider);
 
+    final prefs = ref.watch(sharedPreferencesProvider);
+
+    String lastKnownLocationString = prefs.getString('lastKnownLocation') ?? '';
+    Coordinates? lastKnownLocation =
+        Coordinates.decode(lastKnownLocationString).firstOrNull;
+
+    String savedCoordinatesString = prefs.getString('savedLocations') ?? '';
+    List<Coordinates> savedLocationsList =
+        Coordinates.decode(savedCoordinatesString);
+
     return Scaffold(
       appBar: AppBar(title: const Text('James\' Weather')),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(24),
           child: Column(
             children: [
               currentCoordinates.when(
                 data: (coords) {
-                  final currentLat = coords.latitude;
-                  final currentLon = coords.longitude;
-
-                  final currentWeatherDataAsync = ref.watch(weatherDataProvider(
-                      currentLat, currentLon, kCurrentWeatherApiUrl));
-
-                  return currentWeatherDataAsync.when(
-                    data: (currentWeatherData) {
-                      return WeatherCard(currentWeatherData);
-                    },
-                    loading: () => const Center(
-                      child: Column(
-                        children: [
-                          Text('Waiting for weather data...'),
-                          CircularProgressIndicator(),
-                        ],
-                      ),
-                    ),
-                    error: (error, stackTrace) =>
-                        Text('Error getting weather data: $error'),
-                  );
+                  prefs.setString(
+                      'lastKnownLocation', Coordinates.encode([coords]));
+                  return WeatherCard(coords);
                 },
-                loading: () => const Center(
-                  child: Column(
-                    children: [
-                      Text('Waiting for location data...'),
-                      CircularProgressIndicator(),
-                    ],
-                  ),
+                loading: () {
+                  return lastKnownLocation != null
+                      ? WeatherCard(lastKnownLocation)
+                      : const EmptyWeatherCard(
+                          'Loading current coords... Last known location is null');
+                },
+                error: (error, stackTrace) {
+                  print('ERROR GETTING CURRENT COORDS: $error');
+                  return const EmptyWeatherCard('Error getting current coords');
+                },
+              ),
+              Expanded(
+                child: ListView(
+                  children: savedLocationsList
+                      .map((location) => WeatherCard(location))
+                      .toList(),
                 ),
-                error: (error, stackTrace) =>
-                    Text('Error getting location data: $error'),
               ),
               ElevatedButton(
                 onPressed: () {

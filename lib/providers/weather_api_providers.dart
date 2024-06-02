@@ -1,20 +1,21 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:weather_app/constants/constants.dart';
 
-part 'api_providers.g.dart';
+part 'weather_api_providers.g.dart';
 
 @riverpod
-class WeatherData extends _$WeatherData {
+class CurrentWeatherData extends _$CurrentWeatherData {
   @override
   FutureOr<Map<String, dynamic>> build(
-      double latitude, double longitude, String apiUrl) async {
+      double latitude, double longitude) async {
     final apiKey = dotenv.env['OPEN_WEATHER_MAP_API_KEY'];
     final dio = Dio();
 
     try {
       final response = await dio.get(
-        apiUrl,
+        kCurrentWeatherApiUrl,
         queryParameters: {
           'lat': latitude,
           'lon': longitude,
