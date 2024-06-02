@@ -1,19 +1,20 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:weather_app/classes/coordinates.dart';
+import 'package:weather_app/services/shared_prefs.dart';
 
 part 'location_provider.g.dart';
 
 @riverpod
 class Location extends _$Location {
   @override
-  FutureOr<Coordinates> build() async {
-    Position position = await _determinePosition();
-    return Coordinates(
-        latitude: position.latitude, longitude: position.longitude);
+  Coordinates? build() {
+    // return last known position until new one is determined
+    _determinePosition();
+    return SharedPrefs().lastKnownLocation;
   }
 
-  Future<Position> _determinePosition() async {
+  Future<void> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -36,7 +37,7 @@ class Location extends _$Location {
         'Location permissions are permanently denied, we cannot request permissions.',
       );
     }
-    // state = await Geolocator.getCurrentPosition();
-    return await Geolocator.getCurrentPosition();
+    Position pos = await Geolocator.getCurrentPosition();
+    state = Coordinates(latitude: pos.latitude, longitude: pos.longitude);
   }
 }

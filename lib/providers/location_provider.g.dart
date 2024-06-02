@@ -6,12 +6,12 @@ part of 'location_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$locationHash() => r'ee81e967292bca12d20cdadd8f83d3f8c40204d5';
+String _$locationHash() => r'bce0aa05abc92cc3439b7e917528c82c0cde15f1';
 
 /// See also [Location].
 @ProviderFor(Location)
 final locationProvider =
-    AutoDisposeAsyncNotifierProvider<Location, Coordinates>.internal(
+    AutoDisposeNotifierProvider<Location, Coordinates?>.internal(
   Location.new,
   name: r'locationProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final locationProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$Location = AutoDisposeAsyncNotifier<Coordinates>;
+typedef _$Location = AutoDisposeNotifier<Coordinates?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

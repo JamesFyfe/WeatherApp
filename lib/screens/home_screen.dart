@@ -11,8 +11,6 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentCoordinates = ref.watch(locationProvider);
-
     return Scaffold(
       appBar: AppBar(title: const Text('James\' Weather')),
       body: SafeArea(
@@ -20,20 +18,13 @@ class HomeScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(24),
           child: Column(
             children: [
-              currentCoordinates.when(
-                data: (coords) {
-                  SharedPrefs().lastKnownLocation = coords;
-                  return WeatherCard(coords);
-                },
-                loading: () {
-                  return SharedPrefs().lastKnownLocation != null
-                      ? WeatherCard(SharedPrefs().lastKnownLocation!)
+              Consumer(
+                builder: (context, ref, child) {
+                  final currentCoordinates = ref.watch(locationProvider);
+                  return currentCoordinates != null
+                      ? WeatherCard(currentCoordinates)
                       : const EmptyWeatherCard(
                           'Loading current coords... Last known location is null');
-                },
-                error: (error, stackTrace) {
-                  print('ERROR GETTING CURRENT COORDS: $error');
-                  return const EmptyWeatherCard('Error getting current coords');
                 },
               ),
               Expanded(
