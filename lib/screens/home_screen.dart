@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:weather_app/classes/coordinates.dart';
 import 'package:weather_app/providers/app_providers.dart';
 import 'package:weather_app/providers/location_provider.dart';
 import 'package:weather_app/services/shared_prefs.dart';
+import 'package:weather_app/widgets/search_bar.dart';
 import 'package:weather_app/widgets/ui_widgets.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -18,6 +18,9 @@ class HomeScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(24),
           child: Column(
             children: [
+              const SearchBarAndResults(),
+
+              // Current location weatherCard
               Consumer(
                 builder: (context, ref, child) {
                   final currentCoordinates = ref.watch(locationProvider);
@@ -27,6 +30,7 @@ class HomeScreen extends ConsumerWidget {
                           'Loading current coords... Last known location is null');
                 },
               ),
+              // Saved location weatherCards
               Expanded(
                 child: ListView(
                   children: SharedPrefs()
