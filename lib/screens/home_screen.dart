@@ -14,40 +14,57 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('James\' Weather')),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            children: [
-              const SearchBarAndResults(),
-              Expanded(
-                child: ListView(
-                  children: [
-                    // Current location weatherCard
-                    Consumer(
-                      builder: (context, ref, child) {
-                        final currentCoordinates = ref.watch(locationProvider);
-                        return currentCoordinates != null
-                            ? WeatherCard(currentCoordinates)
-                            : const EmptyWeatherCard(
-                                'Loading current coords... Last known location is null');
-                      },
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(24.0),
+              child: CitySearchBar(),
+            ),
+            Expanded(
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView(
+                            children: [
+                              // Current location weatherCard
+                              Consumer(
+                                builder: (context, ref, child) {
+                                  final currentCoordinates =
+                                      ref.watch(locationProvider);
+                                  return currentCoordinates != null
+                                      ? WeatherCard(currentCoordinates)
+                                      : const EmptyWeatherCard(
+                                          'Loading current coords... Last known location is null');
+                                },
+                              ),
+                              // Saved location weatherCards
+                              ...SharedPrefs()
+                                  .savedLocations
+                                  .map((location) => WeatherCard(location))
+                                  .toList(),
+                            ],
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            ref
+                                .read(selectedThemeProvider.notifier)
+                                .toggleTheme();
+                          },
+                          child: const Icon(Icons.brightness_6),
+                        ),
+                      ],
                     ),
-                    // Saved location weatherCards
-                    ...SharedPrefs()
-                        .savedLocations
-                        .map((location) => WeatherCard(location))
-                        .toList(),
-                  ],
-                ),
+                  ),
+                  const CitySearchResults(),
+                ],
               ),
-              ElevatedButton(
-                onPressed: () {
-                  ref.read(selectedThemeProvider.notifier).toggleTheme();
-                },
-                child: const Icon(Icons.brightness_6),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
