@@ -50,7 +50,7 @@ class CitySearchResults extends ConsumerWidget {
             ? const SizedBox.shrink()
             : Positioned.fill(
                 child: Container(
-                  color: Colors.black87,
+                  color: Theme.of(context).canvasColor.withOpacity(0.95),
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: results.length,
