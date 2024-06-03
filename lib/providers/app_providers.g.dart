@@ -6,6 +6,20 @@ part of 'app_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$utcTimeHash() => r'92da02d55515134d62ae2a954d4407c729178946';
+
+/// See also [utcTime].
+@ProviderFor(utcTime)
+final utcTimeProvider = AutoDisposeStreamProvider<DateTime>.internal(
+  utcTime,
+  name: r'utcTimeProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$utcTimeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef UtcTimeRef = AutoDisposeStreamProviderRef<DateTime>;
 String _$selectedThemeHash() => r'23b17bb580a4aa38f47677680558b0b4703b644a';
 
 /// See also [SelectedTheme].

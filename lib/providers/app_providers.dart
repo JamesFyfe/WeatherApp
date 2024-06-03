@@ -54,3 +54,12 @@ class SelectedUnit extends _$SelectedUnit {
     state = 'C';
   }
 }
+
+@riverpod
+Stream<DateTime> utcTime(UtcTimeRef ref) {
+  // emit a new value only when the second is 0
+  return Stream.periodic(
+    const Duration(seconds: 1),
+    (_) => DateTime.now().toUtc(),
+  ).where((time) => time.second == 0);
+}

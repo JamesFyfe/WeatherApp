@@ -26,11 +26,20 @@ class WeatherCard extends ConsumerWidget {
         final temperature = tempUnit == 'F'
             ? kelvinToFahrenheit(weatherData['main']['temp'])
             : kelvinToCelsius(weatherData['main']['temp']);
-        final weather = weatherData['weather'][0]['main'];
+        // final weather = weatherData['weather'][0]['main'];
+        final timeOffset = (weatherData['timezone']);
         final weatherDescription = weatherData['weather'][0]['description'];
         final weatherIconId = weatherData['weather'][0]['icon'];
         final iconUrl =
             'https://openweathermap.org/img/wn/$weatherIconId@2x.png';
+
+        // all timestamps in seconds
+        final sunriseTime = (weatherData['sys']['sunrise']);
+        final sunsetTime = (weatherData['sys']['sunset']);
+
+        final nowTimeStamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+        final isDayTime =
+            nowTimeStamp > sunriseTime && nowTimeStamp < sunsetTime;
 
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 4),
@@ -41,17 +50,20 @@ class WeatherCard extends ConsumerWidget {
               context.push(kWeatherDetailsRoute);
             },
             child: Ink(
-              height: 96,
-              decoration: const BoxDecoration(
-                color: Colors.blueGrey,
-                borderRadius: BorderRadius.all(Radius.circular(12)),
+              height: 100,
+              decoration: BoxDecoration(
+                color: isDayTime
+                    ? const Color.fromARGB(255, 93, 138, 174)
+                    : Color.fromARGB(255, 35, 48, 81),
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 16, left: 16),
+                    padding: const EdgeInsets.only(top: 8, left: 16),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -60,6 +72,19 @@ class WeatherCard extends ConsumerWidget {
                               .textTheme
                               .headlineSmall
                               ?.copyWith(color: Colors.white),
+                        ),
+                        Consumer(
+                          builder: (context, ref, child) {
+                            final utcTime = ref.watch(utcTimeProvider).value;
+                            final localTime = utcToLocal(utcTime, timeOffset);
+                            return Text(
+                              localTime,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(color: Colors.white),
+                            );
+                          },
                         ),
                         Row(
                           children: [
@@ -87,7 +112,7 @@ class WeatherCard extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 8),
                         child: Text(
                           '${temperature.toString()}°',
                           style: Theme.of(context)
