@@ -36,8 +36,7 @@ class HomeScreen extends StatelessWidget {
                                 ? WeatherCard(currentCoordinates,
                                     closable: false,
                                     overwriteTimeText: "Current Location")
-                                : const EmptyWeatherCard(
-                                    'Loading current coords... Last known location is null');
+                                : const EmptyWeatherCard('Loading...');
                           },
                         ),
                         // Saved location weatherCards

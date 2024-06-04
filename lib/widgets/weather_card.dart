@@ -24,7 +24,10 @@ class WeatherCard extends ConsumerWidget {
 
     return weatherDataAsync.when(
       data: (weatherData) {
-        final cityName = weatherData['name'];
+        String cityName = weatherData['name'];
+        if (cityName.length > 16) {
+          cityName = '${cityName.substring(0, 13)}...';
+        }
         final temperature = tempUnit == 'F'
             ? kelvinToFahrenheit(weatherData['main']['temp'].toDouble())
             : kelvinToCelsius(weatherData['main']['temp'].toDouble());
