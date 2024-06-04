@@ -107,15 +107,3 @@ class SearchQuery extends _$SearchQuery {
     state = query;
   }
 }
-
-@riverpod
-class ShowSearch extends _$ShowSearch {
-  @override
-  bool build() {
-    return false;
-  }
-
-  void set(bool show) {
-    state = show;
-  }
-}

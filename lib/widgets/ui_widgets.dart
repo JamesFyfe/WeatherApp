@@ -62,6 +62,7 @@ class DailyWeatherCard extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             width: 80,
@@ -75,8 +76,8 @@ class DailyWeatherCard extends ConsumerWidget {
           ),
           Image.network(
             data.iconUrl,
-            width: 32,
-            height: 32,
+            width: 40,
+            height: 40,
             fit: BoxFit.contain,
           ),
           const SizedBox(width: 50),
@@ -84,7 +85,7 @@ class DailyWeatherCard extends ConsumerWidget {
             'Low ${tempLow.toString()}°',
             style: Theme.of(context)
                 .textTheme
-                .titleMedium
+                .bodyMedium
                 ?.copyWith(color: Colors.white),
           ),
           const SizedBox(width: 30),
@@ -92,7 +93,7 @@ class DailyWeatherCard extends ConsumerWidget {
             'High ${tempHigh.toString()}°',
             style: Theme.of(context)
                 .textTheme
-                .titleMedium
+                .bodyMedium
                 ?.copyWith(color: Colors.white),
           ),
         ],

@@ -526,20 +526,5 @@ final searchQueryProvider =
 );
 
 typedef _$SearchQuery = AutoDisposeNotifier<String>;
-String _$showSearchHash() => r'b6b772761cd183cfc018d140a9e4068f2ceb9a85';
-
-/// See also [ShowSearch].
-@ProviderFor(ShowSearch)
-final showSearchProvider =
-    AutoDisposeNotifierProvider<ShowSearch, bool>.internal(
-  ShowSearch.new,
-  name: r'showSearchProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$showSearchHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$ShowSearch = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
