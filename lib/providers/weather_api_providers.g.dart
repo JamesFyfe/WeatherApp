@@ -197,6 +197,176 @@ class _CurrentWeatherDataProviderElement
   double get longitude => (origin as CurrentWeatherDataProvider).longitude;
 }
 
+String _$fiveDayWeatherDataHash() =>
+    r'5f704ed784cabefef9bc7f1c35bf6abeee3b73a1';
+
+abstract class _$FiveDayWeatherData
+    extends BuildlessAutoDisposeAsyncNotifier<Map<String, dynamic>> {
+  late final double latitude;
+  late final double longitude;
+
+  FutureOr<Map<String, dynamic>> build(
+    double latitude,
+    double longitude,
+  );
+}
+
+/// See also [FiveDayWeatherData].
+@ProviderFor(FiveDayWeatherData)
+const fiveDayWeatherDataProvider = FiveDayWeatherDataFamily();
+
+/// See also [FiveDayWeatherData].
+class FiveDayWeatherDataFamily
+    extends Family<AsyncValue<Map<String, dynamic>>> {
+  /// See also [FiveDayWeatherData].
+  const FiveDayWeatherDataFamily();
+
+  /// See also [FiveDayWeatherData].
+  FiveDayWeatherDataProvider call(
+    double latitude,
+    double longitude,
+  ) {
+    return FiveDayWeatherDataProvider(
+      latitude,
+      longitude,
+    );
+  }
+
+  @override
+  FiveDayWeatherDataProvider getProviderOverride(
+    covariant FiveDayWeatherDataProvider provider,
+  ) {
+    return call(
+      provider.latitude,
+      provider.longitude,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'fiveDayWeatherDataProvider';
+}
+
+/// See also [FiveDayWeatherData].
+class FiveDayWeatherDataProvider extends AutoDisposeAsyncNotifierProviderImpl<
+    FiveDayWeatherData, Map<String, dynamic>> {
+  /// See also [FiveDayWeatherData].
+  FiveDayWeatherDataProvider(
+    double latitude,
+    double longitude,
+  ) : this._internal(
+          () => FiveDayWeatherData()
+            ..latitude = latitude
+            ..longitude = longitude,
+          from: fiveDayWeatherDataProvider,
+          name: r'fiveDayWeatherDataProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$fiveDayWeatherDataHash,
+          dependencies: FiveDayWeatherDataFamily._dependencies,
+          allTransitiveDependencies:
+              FiveDayWeatherDataFamily._allTransitiveDependencies,
+          latitude: latitude,
+          longitude: longitude,
+        );
+
+  FiveDayWeatherDataProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.latitude,
+    required this.longitude,
+  }) : super.internal();
+
+  final double latitude;
+  final double longitude;
+
+  @override
+  FutureOr<Map<String, dynamic>> runNotifierBuild(
+    covariant FiveDayWeatherData notifier,
+  ) {
+    return notifier.build(
+      latitude,
+      longitude,
+    );
+  }
+
+  @override
+  Override overrideWith(FiveDayWeatherData Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: FiveDayWeatherDataProvider._internal(
+        () => create()
+          ..latitude = latitude
+          ..longitude = longitude,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        latitude: latitude,
+        longitude: longitude,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeAsyncNotifierProviderElement<FiveDayWeatherData,
+      Map<String, dynamic>> createElement() {
+    return _FiveDayWeatherDataProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FiveDayWeatherDataProvider &&
+        other.latitude == latitude &&
+        other.longitude == longitude;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, latitude.hashCode);
+    hash = _SystemHash.combine(hash, longitude.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin FiveDayWeatherDataRef
+    on AutoDisposeAsyncNotifierProviderRef<Map<String, dynamic>> {
+  /// The parameter `latitude` of this provider.
+  double get latitude;
+
+  /// The parameter `longitude` of this provider.
+  double get longitude;
+}
+
+class _FiveDayWeatherDataProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<FiveDayWeatherData,
+        Map<String, dynamic>> with FiveDayWeatherDataRef {
+  _FiveDayWeatherDataProviderElement(super.provider);
+
+  @override
+  double get latitude => (origin as FiveDayWeatherDataProvider).latitude;
+  @override
+  double get longitude => (origin as FiveDayWeatherDataProvider).longitude;
+}
+
 String _$citySearchHash() => r'772ca9d08e34bc533b73607378c864cd4481ad60';
 
 abstract class _$CitySearch

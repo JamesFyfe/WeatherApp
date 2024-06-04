@@ -4,7 +4,7 @@ import 'package:weather_app/providers/app_providers.dart';
 import 'package:weather_app/providers/location_provider.dart';
 import 'package:weather_app/widgets/app_bar.dart';
 import 'package:weather_app/widgets/search_bar.dart';
-import 'package:weather_app/widgets/ui_widgets.dart';
+import 'package:weather_app/widgets/weather_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -34,7 +34,8 @@ class HomeScreen extends StatelessWidget {
                                 ref.watch(locationProvider);
                             return currentCoordinates != null
                                 ? WeatherCard(currentCoordinates,
-                                    closable: false)
+                                    closable: false,
+                                    overwriteTimeText: "Current Location")
                                 : const EmptyWeatherCard(
                                     'Loading current coords... Last known location is null');
                           },

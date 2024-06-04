@@ -14,7 +14,8 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: kWeatherDetailsRoute,
       builder: (BuildContext context, GoRouterState state) {
-        return const WeatherDetailsScreen();
+        Map<String, dynamic> currentData = state.extra as Map<String, dynamic>;
+        return WeatherDetailsScreen(currentData);
       },
     ),
     GoRoute(

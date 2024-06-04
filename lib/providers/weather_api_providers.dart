@@ -35,6 +35,36 @@ class CurrentWeatherData extends _$CurrentWeatherData {
 }
 
 @riverpod
+class FiveDayWeatherData extends _$FiveDayWeatherData {
+  @override
+  FutureOr<Map<String, dynamic>> build(
+      double latitude, double longitude) async {
+    final apiKey = dotenv.env['OPEN_WEATHER_MAP_API_KEY'];
+    final dio = Dio();
+
+    try {
+      final response = await dio.get(
+        kFiveDayWeatherApiUrl,
+        queryParameters: {
+          'lat': latitude,
+          'lon': longitude,
+          'appid': apiKey,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw Exception("${response.statusCode}: ${response.statusMessage}");
+      }
+    } catch (error) {
+      print("ERROR getting 5 day data");
+      throw Exception('Failed to fetch weather data: $error');
+    }
+  }
+}
+
+@riverpod
 class CitySearch extends _$CitySearch {
   @override
   FutureOr<List<dynamic>?> build(String cityName) async {
